@@ -1,0 +1,21 @@
+.image {
+  width: 40vmin;
+  aspect-ratio: 1 / 1;
+  background-color: var(--black);
+  object-fit: cover;
+  display: grid;
+  place-items: center;
+
+  &:hover .imageButton {
+    opacity: 1;
+  }
+}
+
+.imageButton {
+  position: absolute;
+  opacity: 0;
+}
+
+.title {
+  text-align: center;
+}

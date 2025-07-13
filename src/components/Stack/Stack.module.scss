@@ -1,0 +1,32 @@
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+
+  .stack {
+    width: 100%;
+  }
+}
+
+.horizontal {
+  flex-direction: row;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.gap {
+  gap: 1em;
+}
+
+.gap-small {
+  gap: 0.5em;
+}
+
+.gap-medium {
+  gap: 1em;
+}
+
+.gap-large {
+  gap: 4vmin;
+}

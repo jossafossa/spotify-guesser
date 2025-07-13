@@ -1,0 +1,35 @@
+.count {
+  --size: 3em;
+  --color: var(--white);
+  --background: var(--black);
+  min-width: var(--size);
+  height: var(--size);
+  padding-inline: 0.2em;
+  font-size: 2vmin;
+  display: grid;
+  place-items: center;
+  border-radius: 100px;
+  background-color: var(--background);
+  color: var(--color);
+  font-weight: bold;
+}
+
+.primary {
+  --background: var(--black);
+  --color: var(--white);
+}
+
+.secondary {
+  --background: var(--gray);
+  --color: var(--white);
+}
+
+.negative {
+  --background: var(--negative);
+  --color: var(--white);
+}
+
+.positive {
+  --background: var(--positive);
+  --color: var(--white);
+}
