@@ -21,10 +21,7 @@ import {
 
 const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 
-const redirectUri = window.location.href.substring(
-  0,
-  window.location.href.length - 1
-);
+const redirectUri = window.location.protocol + "//" + window.location.host;
 
 //current url is the redirect URI
 console.log(redirectUri);
