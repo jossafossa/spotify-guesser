@@ -1,11 +1,11 @@
 {
-  "artist_name": "Artiestnaam",
+  "artist_name": "Artiest",
   "error_invalid_track_data": "Nummer kan niet worden weergegeven",
   "hide_preview": "Nummer verbergen",
-  "loading_device": "",
-  "no_device_connected": "",
-  "no_track_playing": "",
+  "loading_device": "Apparaat laden...",
+  "no_device_connected": "Geen apparaat verbonden",
+  "no_track_playing": "Geen nummer wordt afgespeeld",
   "now_playing": "Wordt nu afgespeeld",
   "show_preview": "Nummer onthullen",
-  "song_name": "Nummernaam"
+  "song_name": "Titel"
 }

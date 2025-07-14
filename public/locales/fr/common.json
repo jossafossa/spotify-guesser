@@ -1,0 +1,11 @@
+{
+  "artist_name": "Nom de l'artiste",
+  "error_invalid_track_data": "Le morceau ne peut pas être affiché",
+  "hide_preview": "Masquer le morceau",
+  "loading_device": "Chargement de l'appareil...",
+  "no_device_connected": "Aucun appareil connecté",
+  "no_track_playing": "Aucun morceau en cours de lecture",
+  "now_playing": "En cours de lecture",
+  "show_preview": "Révéler le morceau",
+  "song_name": "Titre du morceau"
+}

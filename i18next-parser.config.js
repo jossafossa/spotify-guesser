@@ -40,7 +40,7 @@ export default {
   lineEnding: 'auto',
   // Control the line ending. See options at https://github.com/ryanve/eol
 
-  locales: ['en', 'nl'],
+  locales: ['en', 'nl', 'de', 'fr', 'es'],
   // An array of the locales in your applications
 
   namespaceSeparator: ':',
