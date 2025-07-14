@@ -1,5 +1,4 @@
 .screen {
-  --spacing: 2rem;
   height: 100dvh;
   width: 100dvw;
   display: grid;
@@ -8,7 +7,7 @@
     "header"
     "preview"
     "navigation";
-  padding: var(--spacing);
+  padding: 1rem 2rem;
   gap: 1rem;
 }
 
