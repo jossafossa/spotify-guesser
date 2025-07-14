@@ -1,5 +1,5 @@
 .select {
-  --size: 2rem;
+  --size: 3rem;
   --font-size: 0.5;
   --background: var(--black);
   --color: var(--white);
@@ -15,4 +15,5 @@
   color: var(--color);
   font-size: calc(var(--size) * var(--font-size));
   padding-inline: 1em;
+  font-size: 2em;
 }
