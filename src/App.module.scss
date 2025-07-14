@@ -1,5 +1,5 @@
 .screen {
-  --spacing: 2vmin;
+  --spacing: 2rem;
   height: 100dvh;
   width: 100dvw;
   display: grid;
@@ -10,7 +10,6 @@
     "navigation";
   padding: var(--spacing);
   gap: var(--spacing);
-  font-size: 2vmin;
 }
 
 .header {
