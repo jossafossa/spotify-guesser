@@ -1,0 +1,26 @@
+.navigation {
+  display: grid;
+  justify-content: center;
+  width: 100%;
+  grid-template-columns: auto auto auto;
+  grid-template-areas:
+    "controls controls controls"
+    "negative empty positive";
+  gap: 1rem;
+
+  @media screen and (min-width: 800px) {
+    grid-template-areas: "negative controls positive";
+  }
+}
+
+.negative {
+  grid-area: negative;
+}
+
+.controls {
+  grid-area: controls;
+}
+
+.positive {
+  grid-area: positive;
+}

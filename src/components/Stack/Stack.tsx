@@ -18,6 +18,20 @@ export const Stack = ({
   align = "start",
   justify = "start",
 }: PropsWithChildren<StackProps>) => {
+  const alignItems = new Map<string, string>([
+    ["start", "flex-start"],
+    ["center", "center"],
+    ["end", "flex-end"],
+  ]).get(align);
+
+  const justifyContent = new Map<string, string>([
+    ["start", "flex-start"],
+    ["center", "center"],
+    ["end", "flex-end"],
+    ["between", "space-between"],
+    ["around", "space-around"],
+  ]).get(justify);
+
   return (
     <div
       className={classNames(
@@ -27,8 +41,8 @@ export const Stack = ({
         styles[`gap-${gap}`]
       )}
       style={{
-        alignItems: align,
-        justifyContent: justify,
+        alignItems,
+        justifyContent,
       }}
     >
       {children}

@@ -11,7 +11,7 @@ export const RevealButton = ({
   ...props
 }: RevealButtonProps) => {
   return (
-    <Button size="medium" type="icon" {...props}>
+    <Button size="small" type="icon" {...props}>
       {isVisible ? (
         <FontAwesomeIcon icon={faEyeSlash} />
       ) : (

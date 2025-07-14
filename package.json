@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build --mode production",
     "lint": "eslint .",
     "preview": "vite preview",
-    "extract-translations": "i18next"
+    "translations": "i18next"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",

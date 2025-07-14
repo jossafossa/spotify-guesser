@@ -1,0 +1,84 @@
+.tooltip-container {
+  position: relative;
+}
+
+.tooltipWrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.tooltip {
+  --offset: 1rem;
+  position: absolute;
+  background-color: var(--black);
+  color: var(--white);
+  padding: 0.5rem;
+  z-index: 10;
+  transform: translate(var(--x, 0), var(--y, 0));
+  top: calc(var(--top, auto) + var(--offset));
+  left: calc(var(--left, auto) + var(--offset));
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: var(--black);
+    transform: rotate(45deg);
+  }
+}
+
+.top {
+  --y: -100%;
+  margin-top: -1rem;
+}
+
+.bottom {
+  --y: 0%;
+  --top: 100%;
+}
+
+.left {
+  --x: -100%;
+  margin-left: -1rem;
+}
+
+.right {
+  --x: 0%;
+  --left: 100%;
+}
+
+:is(.right, .left) {
+  &.start {
+    align-items: start;
+  }
+
+  &.center {
+    align-items: center;
+  }
+
+  &.end {
+    align-items: end;
+  }
+}
+
+:is(.top, .bottom) {
+  &.start {
+    justify-content: start;
+  }
+
+  &.center {
+    justify-content: center;
+  }
+
+  &.end {
+    justify-content: end;
+  }
+}
+
+.arrow {
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+}

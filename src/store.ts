@@ -31,9 +31,6 @@ console.log(import.meta.env);
 export const api = SpotifyApi.withUserAuthorization(clientId, redirectUri, [
   "user-read-playback-state",
   "user-modify-playback-state",
-  "streaming",
-  "user-read-email",
-  "user-read-private",
 ]);
 
 const swallowError = async <T>(

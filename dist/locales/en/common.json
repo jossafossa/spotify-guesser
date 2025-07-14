@@ -1,9 +1,10 @@
 {
   "artist_name": "Artist name",
-  "error_device_not_found": "No device found",
   "error_invalid_track_data": "Track cannot be displayed",
-  "error_not_playing": "No song is currently playing",
   "hide_preview": "Hide song",
+  "loading_device": "Loading device...",
+  "no_device_connected": "No device connected",
+  "no_track_playing": "No track playing",
   "now_playing": "Now playing",
   "show_preview": "Reveal song",
   "song_name": "Song name"

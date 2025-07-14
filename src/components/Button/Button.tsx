@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { ButtonHTMLAttributes } from "react";
 import styles from "./Button.module.scss";
+import { Tooltip } from "../Tooltip";
 
 export type ButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -9,6 +10,7 @@ export type ButtonProps = Omit<
   size?: "small" | "medium" | "large";
   type?: "normal" | "icon";
   variant?: "primary" | "secondary" | "positive" | "negative";
+  tooltip?: string;
 };
 
 export const Button = ({
@@ -17,6 +19,8 @@ export const Button = ({
   size = "medium",
   type = "normal",
   variant = "primary",
+  disabled = false,
+  tooltip,
   ...props
 }: ButtonProps) => {
   const sizeClasses = {
@@ -38,19 +42,29 @@ export const Button = ({
     negative: styles.negative,
   };
 
-  return (
+  const button = (
     <button
       {...props}
+      disabled={disabled}
       className={classNames(
         className,
         styles.button,
         sizeClasses[size],
         typeClasses[type],
-        variantClasses[variant]
+        variantClasses[variant],
+        disabled && styles.disabled
       )}
       type="button"
     >
       {children}
     </button>
+  );
+
+  return tooltip ? (
+    <Tooltip message={tooltip} position="top">
+      {button}
+    </Tooltip>
+  ) : (
+    button
   );
 };

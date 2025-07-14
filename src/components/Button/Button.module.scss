@@ -1,5 +1,5 @@
 .button {
-  --size: 4vmin;
+  --size: 3rem;
   --font-size: 0.5;
   --background: var(--black);
   --color: var(--white);
@@ -33,15 +33,15 @@
 }
 
 .small {
-  --size: 1em;
+  --size: 2rem;
 }
 
 .medium {
-  --size: 4vmin;
+  --size: 3rem;
 }
 
 .large {
-  --size: 10vmin;
+  --size: 4rem;
 }
 
 .secondary {
@@ -68,4 +68,10 @@
 .positive {
   --background: var(--positive);
   --color: var(--white);
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }

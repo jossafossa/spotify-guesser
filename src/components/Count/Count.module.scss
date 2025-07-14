@@ -1,11 +1,11 @@
 .count {
-  --size: 3em;
+  --size: 3rem;
   --color: var(--white);
   --background: var(--black);
   min-width: var(--size);
   height: var(--size);
-  padding-inline: 0.2em;
-  font-size: 2vmin;
+  padding-inline: 0.2rem;
+  font-size: 1rem;
   display: grid;
   place-items: center;
   border-radius: 100px;

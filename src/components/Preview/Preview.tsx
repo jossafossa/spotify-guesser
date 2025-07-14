@@ -5,6 +5,7 @@ import aiImage from "../../assets/images/not-ai.png";
 import { useEffect, useState } from "react";
 import { RevealButton } from "../RevealButton";
 import { Track, TrackItem } from "@spotify/web-api-ts-sdk";
+import { Button } from "../Button";
 
 const isTrack = (item: TrackItem): item is Track => {
   return (
@@ -16,8 +17,9 @@ type PreviewProps = {
   isVisible?: boolean;
 };
 
-export const Preview = ({ track, isVisible = false }: PreviewProps) => {
+export const Preview = ({ track }: PreviewProps) => {
   const { t } = useTranslation();
+  const [isVisible, setIsVisible] = useState<boolean>(true);
   const [coverVisible, setCoverVisible] = useState(false);
   const [artistVisible, setArtistVisible] = useState(false);
   const [nameVisible, setNameVisible] = useState(false);
@@ -26,7 +28,14 @@ export const Preview = ({ track, isVisible = false }: PreviewProps) => {
     setCoverVisible(false);
     setArtistVisible(false);
     setNameVisible(false);
-  }, [track.id, setCoverVisible, setArtistVisible, setNameVisible]);
+    setIsVisible(false);
+  }, [
+    track.id,
+    setCoverVisible,
+    setArtistVisible,
+    setNameVisible,
+    setIsVisible,
+  ]);
 
   if (!isTrack(track)) {
     return <div>{t("error_invalid_track_data")}</div>;
@@ -45,7 +54,6 @@ export const Preview = ({ track, isVisible = false }: PreviewProps) => {
 
         {!isVisible && (
           <RevealButton
-            size="medium"
             onClick={() => setCoverVisible(!coverVisible)}
             isVisible={coverVisible}
             className={styles.imageButton}
@@ -77,6 +85,16 @@ export const Preview = ({ track, isVisible = false }: PreviewProps) => {
             isVisible={nameVisible}
           />
         )}
+      </Stack>
+
+      <Stack horizontal gap="large" justify="center">
+        <Button
+          variant="secondary"
+          onClick={() => setIsVisible(!isVisible)}
+          size="medium"
+        >
+          {isVisible ? t("hide_preview") : t("show_preview")}
+        </Button>
       </Stack>
     </Stack>
   );
