@@ -20,10 +20,13 @@ import {
   usePlayMutation,
   usePreviousMutation,
 } from "../../store";
+import ConfettiExplosion from "react-confetti-explosion";
 
 export const Navigation = () => {
   const [correctCount, setCorrectCount] = useState<number>(0);
   const [incorrectCount, setIncorrectCount] = useState<number>(0);
+  const [positiveEffect, setPositiveEffect] = useState<boolean>(false);
+  const [negativeEffect, setNegativeEffect] = useState<boolean>(false);
 
   const [play] = usePlayMutation();
   const [pause] = usePauseMutation();
@@ -45,21 +48,33 @@ export const Navigation = () => {
     if (!deviceId) return;
     setCorrectCount(correctCount + 1);
     next(deviceId);
+    showPositiveEffect();
   };
 
   const handleInCorrect = () => {
     if (!deviceId) return;
     setIncorrectCount(incorrectCount + 1);
-    previous(deviceId);
+    next(deviceId);
+    showNegativeEffect();
   };
 
   const tooltip = undefined;
+
+  const showPositiveEffect = () => {
+    setPositiveEffect(true);
+    setTimeout(() => setPositiveEffect(false), 1000);
+  };
+
+  const showNegativeEffect = () => {
+    setNegativeEffect(true);
+    setTimeout(() => setNegativeEffect(false), 1000);
+  };
 
   return (
     <div className={styles.navigation}>
       <div className={styles.negative}>
         <Stack horizontal gap="large" justify="center" align="center">
-          <Count variant="negative">{incorrectCount}</Count>
+          <Count variant="negative" count={incorrectCount} />
 
           <Button
             variant="negative"
@@ -69,6 +84,9 @@ export const Navigation = () => {
             disabled={!deviceId}
             tooltip={tooltip}
           >
+            {negativeEffect && (
+              <ConfettiExplosion particleCount={25} colors={["gray"]} />
+            )}
             <FontAwesomeIcon icon={faThumbsDown} />
           </Button>
         </Stack>
@@ -130,10 +148,11 @@ export const Navigation = () => {
             disabled={!deviceId}
             tooltip={tooltip}
           >
+            {positiveEffect && <ConfettiExplosion />}
             <FontAwesomeIcon icon={faThumbsUp} />
           </Button>
 
-          <Count variant="positive">{correctCount}</Count>
+          <Count variant="positive" count={correctCount} />
         </Stack>
       </div>
     </div>

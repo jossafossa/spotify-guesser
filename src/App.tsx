@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Preview } from "./components/Preview";
 import {
   api,
@@ -26,10 +25,6 @@ function App() {
 
   const track = currentPlayback?.item;
 
-  useEffect(() => {
-    setIsVisible(false);
-  }, [track?.id]);
-
   const deviceId = device?.id;
 
   const handleReload = () => {
@@ -42,8 +37,6 @@ function App() {
     if (isLoading) return t("loading_device");
     if (!track) return t("no_track_playing");
   };
-
-  console.log({ deviceId: !deviceId, track });
 
   const error = getError();
 
@@ -59,11 +52,7 @@ function App() {
       </header>
 
       <section className={styles.preview}>
-        {!error && track ? (
-          <Preview track={track} isVisible={isVisible} />
-        ) : (
-          error
-        )}
+        {!error && track ? <Preview track={track} /> : error}
       </section>
 
       <Stack vertical gap="large" justify="center">
