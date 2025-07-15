@@ -8,13 +8,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import {
   Device,
   Devices,
-  ItemTypes,
-  Market,
-  MaxInt,
-  Page,
   PlaybackState,
-  SearchResults,
-  SimplifiedPlaylist,
   SpotifyApi,
   UserProfile,
 } from "@spotify/web-api-ts-sdk";
@@ -38,15 +32,6 @@ const swallowError = async <T>(
   } catch {
     return { error: "asd" };
   }
-};
-
-type SearchOptions<T extends readonly ItemTypes[]> = {
-  q: string; // The search query
-  type: T; // The types of items to search for
-  market?: Market; // Optional market code
-  limit?: MaxInt<50>; // Optional limit (default: 20, max: 50)
-  offset?: number; // Optional offset for pagination
-  include_external?: string; // Optional inclusion of external content
 };
 
 // Define a service using a base URL and expected endpoints
@@ -112,41 +97,6 @@ export const spotifyApi = createApi({
         },
         invalidatesTags: ["Playback"],
       }),
-      search: (<T extends ItemTypes[]>() => {
-        return builder.query<SearchResults<T>, SearchOptions<T>>({
-          queryFn: async ({
-            q,
-            type,
-            market,
-            limit,
-            offset,
-            include_external,
-          }: SearchOptions<T>) => {
-            const data = await api.search(
-              q,
-              type,
-              market,
-              limit,
-              offset,
-              include_external
-            );
-
-            return { data };
-          },
-        });
-      })(),
-      getPlayLists: builder.query<
-        Page<SimplifiedPlaylist>,
-        {
-          limit?: MaxInt<50>;
-          offset?: number;
-        }
-      >({
-        queryFn: async ({ limit, offset }) => {
-          const data = await api.currentUser.playlists.playlists(limit, offset);
-          return { data };
-        },
-      }),
     };
   },
 });
@@ -189,9 +139,7 @@ export const {
   usePauseMutation,
   useNextMutation,
   usePreviousMutation,
-  useSearchQuery,
   useGetDevicesQuery,
-  useGetPlayListsQuery,
 } = spotifyApi;
 
 export type RootState = ReturnType<typeof store.getState>;
