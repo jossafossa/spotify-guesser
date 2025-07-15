@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import { PropsWithChildren } from "react";
 import styles from "./Select.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement>;
 
@@ -10,8 +12,9 @@ export const Select = ({
   ...props
 }: PropsWithChildren<SelectProps>) => {
   return (
-    <select {...props} className={classNames(className, styles.select)}>
-      {children}
-    </select>
+    <label className={classNames(className, styles.select)}>
+      <select {...props}>{children}</select>
+      <FontAwesomeIcon className={styles.icon} icon={faCaretDown} />
+    </label>
   );
 };

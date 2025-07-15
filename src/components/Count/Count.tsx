@@ -24,8 +24,6 @@ export const Count = ({ count, variant = "primary" }: CountProps) => {
       setAnimationClass(null);
     }, 500);
 
-    console.log("count change");
-
     return () => clearTimeout(timeout);
   }, [count]);
 

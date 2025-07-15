@@ -5,7 +5,6 @@
   "loading_device": "Cargando dispositivo...",
   "no_device_connected": "No hay ningún dispositivo conectado",
   "no_track_playing": "Ninguna pista en reproducción",
-  "now_playing": "Reproduciendo ahora",
   "show_preview": "Revelar canción",
   "song_name": "Título de la canción"
 }

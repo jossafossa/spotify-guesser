@@ -1,11 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { Stack } from "../Stack";
 import styles from "./Preview.module.scss";
-import aiImage from "../../assets/images/not-ai.png";
+import placeholder from "../../assets/images/placeholder.svg";
 import { useEffect, useState } from "react";
 import { RevealButton } from "../RevealButton";
 import { Track, TrackItem } from "@spotify/web-api-ts-sdk";
 import { Button } from "../Button";
+import classNames from "classnames";
+import { BlurryImage } from "../BlurryImage";
 
 const isTrack = (item: TrackItem): item is Track => {
   return (
@@ -47,45 +49,46 @@ export const Preview = ({ track }: PreviewProps) => {
 
   return (
     <Stack vertical gap="medium" align="center">
-      <h1>{t("now_playing")}</h1>
-
-      <picture className={styles.image}>
-        <img src={coverVisible || isVisible ? image : aiImage} alt={name} />
-
+      <BlurryImage
+        className={styles.picture}
+        imageclassName={styles.image}
+        src={coverVisible || isVisible ? image : placeholder}
+        alt={name}
+      >
         {!isVisible && (
           <RevealButton
             onClick={() => setCoverVisible(!coverVisible)}
             isVisible={coverVisible}
+            size="large"
             className={styles.imageButton}
           />
         )}
-      </picture>
+      </BlurryImage>
 
-      <Stack horizontal justify="center" align="center" gap="small">
-        <h2 className={styles.title}>
-          {artistVisible || isVisible ? artist : t("artist_name")}
-        </h2>
-
+      <h2 className={styles.title}>
+        {nameVisible || isVisible ? name : t("song_name")}
         {!isVisible && (
-          <RevealButton
-            onClick={() => setArtistVisible(!artistVisible)}
-            isVisible={artistVisible}
-          />
+          <span className={styles.revealButton}>
+            <RevealButton
+              onClick={() => setNameVisible(!nameVisible)}
+              isVisible={nameVisible}
+              className={styles.revealButton}
+            />
+          </span>
         )}
-      </Stack>
+      </h2>
 
-      <Stack horizontal justify="center" align="center" gap="small">
-        <h3 className={styles.title}>
-          {nameVisible || isVisible ? name : t("song_name")}
-        </h3>
-
+      <h4 className={classNames(styles.title, styles.subtitle)}>
+        {artistVisible || isVisible ? artist : t("artist_name")}
         {!isVisible && (
-          <RevealButton
-            onClick={() => setNameVisible(!nameVisible)}
-            isVisible={nameVisible}
-          />
+          <span className={styles.revealButton}>
+            <RevealButton
+              onClick={() => setArtistVisible(!artistVisible)}
+              isVisible={artistVisible}
+            />
+          </span>
         )}
-      </Stack>
+      </h4>
 
       <Stack horizontal gap="large" justify="center">
         <Button

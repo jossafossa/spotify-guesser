@@ -12,7 +12,6 @@ i18n
     fallbackLng: "en",
     ns: ["common"],
     defaultNS: "common",
-    debug: true,
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
     },

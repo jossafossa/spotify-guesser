@@ -5,7 +5,6 @@
   "loading_device": "Chargement de l'appareil...",
   "no_device_connected": "Aucun appareil connecté",
   "no_track_playing": "Aucun morceau en cours de lecture",
-  "now_playing": "En cours de lecture",
   "show_preview": "Révéler le morceau",
   "song_name": "Titre du morceau"
 }

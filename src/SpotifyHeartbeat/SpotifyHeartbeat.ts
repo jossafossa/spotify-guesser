@@ -39,6 +39,7 @@ export class SpotifyHeartbeat extends EventHandler<SpotifyHearthbeatEvent> {
   #latestTrack: PlaybackStateResponse;
   #tickInterval: number;
   #ready: boolean = false;
+  #clock: number = -1;
 
   constructor(
     api: SpotifyApi,
@@ -49,11 +50,28 @@ export class SpotifyHeartbeat extends EventHandler<SpotifyHearthbeatEvent> {
     this.#api = api;
     this.#tickInterval = tickInterval;
 
+    this.start();
+
+    // on window inactive stop
+    window.addEventListener("visibilitychange", () =>
+      document.visibilityState === "hidden" ? this.stop() : this.start()
+    );
+  }
+
+  start() {
+    console.log("Starting SpotifyHeartbeat...");
+    clearInterval(this.#clock);
     this.#startClock();
   }
 
+  stop() {
+    console.log("Stopping SpotifyHeartbeat...");
+    this.#ready = false;
+    clearInterval(this.#clock);
+  }
+
   #startClock() {
-    setInterval(async () => {
+    this.#clock = setInterval(async () => {
       try {
         await this.tick();
         this.dispatchEvent(new SpotifyHearthbeatEvent("tick"));

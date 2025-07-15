@@ -1,14 +1,19 @@
-.image {
+.picture {
   width: 20rem;
   aspect-ratio: 1 / 1;
-  background-color: var(--black);
-  object-fit: cover;
   display: grid;
   place-items: center;
 
   &:hover .imageButton {
     opacity: 1;
   }
+}
+
+.image {
+  background-color: var(--black);
+  overflow: hidden;
+  border-radius: 1rem;
+  object-fit: cover;
 }
 
 .imageButton {
@@ -18,4 +23,18 @@
 
 .title {
   text-align: center;
+  display: inline;
+  line-height: 1.5;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.revealButton {
+  display: inline-flex;
+  align-items: center;
+  height: 0;
+  width: 0;
+  margin-left: 0.25rem;
 }

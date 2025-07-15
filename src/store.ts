@@ -24,9 +24,6 @@ const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 const redirectUri = window.location.protocol + "//" + window.location.host;
 
 //current url is the redirect URI
-console.log(redirectUri);
-
-console.log(import.meta.env);
 
 export const api = SpotifyApi.withUserAuthorization(clientId, redirectUri, [
   "user-read-playback-state",
@@ -175,7 +172,6 @@ heartbeat.on("not_ready", () => {
 });
 
 heartbeat.on("player_state_changed", ({ playbackState }) => {
-  console.log("Player state changed", playbackState);
   store.dispatch(
     spotifyApi.util.updateQueryData(
       "getCurrentPlayback",

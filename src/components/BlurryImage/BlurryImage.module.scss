@@ -1,0 +1,15 @@
+.picture {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.blur {
+  scale: 2;
+  position: absolute;
+  opacity: 0.2;
+  filter: blur(2rem);
+  pointer-events: none;
+  border-radius: 100%;
+  z-index: -1;
+}
