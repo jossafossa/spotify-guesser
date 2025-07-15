@@ -7,9 +7,11 @@
     "controls controls controls"
     "negative empty positive";
   gap: 1rem;
+  row-gap: 0.5rem;
 
   @media screen and (min-width: 800px) {
     grid-template-areas: "negative controls positive";
+    row-gap: 1rem;
   }
 }
 

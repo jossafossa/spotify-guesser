@@ -25,3 +25,14 @@
 .navigation {
   grid-area: navigation;
 }
+
+.error {
+  width: 20rem;
+  aspect-ratio: 1 / 1;
+  background-color: var(--black);
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  display: grid;
+  place-content: center;
+}

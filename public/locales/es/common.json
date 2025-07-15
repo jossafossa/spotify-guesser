@@ -1,10 +1,25 @@
 {
   "artist_name": "Nombre del artista",
+  "author": "Autor",
+  "close": "Cerrar modal",
+  "correct_track": "Marcar como correcta",
   "error_invalid_track_data": "No se puede mostrar la pista",
+  "help": "Cómo jugar",
+  "help_text": "¡Pon a prueba tus conocimientos musicales con Spotiguess! \n\nConéctate a tu cuenta de Spotify y comienza a adivinar las canciones que se reproducen en tu dispositivo. Simplemente haz clic en los botones para marcar tu respuesta como correcta o incorrecta. ¿No sabes la respuesta? Puedes revelar el nombre de la canción, el artista y la portada en cualquier momento.\n\n¡Diviértete!",
+  "help_title": "Cómo jugar",
   "hide_preview": "Ocultar canción",
+  "incorrect_track": "Marcar como incorrecta",
   "loading_device": "Cargando dispositivo...",
-  "no_device_connected": "No hay ningún dispositivo conectado",
-  "no_track_playing": "Ninguna pista en reproducción",
+  "next_track": "Siguiente pista",
+  "no_device_connected": "No hay ningún dispositivo conectado. Abre Spotify y comienza a reproducir una pista",
+  "no_track_playing": "No hay ninguna pista en reproducción",
+  "pause_track": "Pausar canción",
+  "play_track": "Reproducir canción",
+  "previous_track": "Pista anterior",
+  "reload": "Recargar página",
+  "reveal_artist": "Mostrar artista",
+  "reveal_cover": "Mostrar portada",
+  "reveal_song_name": "Mostrar nombre de la canción",
   "show_preview": "Revelar canción",
-  "song_name": "Título de la canción"
+  "song_name": "Nombre de la canción"
 }

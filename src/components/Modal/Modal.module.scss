@@ -1,0 +1,29 @@
+.modal {
+  background-color: var(--gray);
+  border: 0;
+  border-radius: 1rem;
+  margin: 1rem;
+  width: clamp(20rem, 100%, 40rem);
+  margin: auto;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.5rem;
+
+  &::backdrop {
+    background-color: var(--black);
+    opacity: 0.75;
+  }
+
+  > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  p {
+    white-space: pre-line;
+    line-height: 1.7;
+  }
+}

@@ -6,13 +6,15 @@ import {
 } from "./store";
 import { Button } from "./components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRefresh } from "@fortawesome/free-solid-svg-icons";
+import { faQuestion, faRefresh } from "@fortawesome/free-solid-svg-icons";
 import { Stack } from "./components/Stack/Stack";
 import styles from "./App.module.scss";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitch } from "./components/LanguageSwitch";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { Navigation } from "./components/Navigation";
+import { useState } from "react";
+import { Modal } from "./components/Modal";
 
 function App() {
   const { t } = useTranslation();
@@ -22,6 +24,7 @@ function App() {
   const { data: currentPlayback } = useGetCurrentPlaybackQuery(
     isLoading ? skipToken : undefined
   );
+  const [showHelp, setShowHelp] = useState(false);
 
   const track = currentPlayback?.item;
 
@@ -29,7 +32,8 @@ function App() {
 
   const handleReload = () => {
     api.logOut();
-    window.location.reload();
+
+    window.location.href = window.location.origin + window.location.pathname;
   };
 
   const getError = () => {
@@ -42,17 +46,37 @@ function App() {
 
   return (
     <main className={styles.screen}>
+      {showHelp && (
+        <Modal title={t("help_title")} onClose={() => setShowHelp(false)}>
+          {t("help_text")}
+        </Modal>
+      )}
       <header className={styles.header}>
         <Stack horizontal gap="large" justify="between" align="center">
           <LanguageSwitch />
-          <Button type="icon" onClick={handleReload}>
-            <FontAwesomeIcon icon={faRefresh} />
-          </Button>
+
+          <Stack horizontal gap="small" align="center">
+            <Button
+              type="icon"
+              onClick={() => setShowHelp(true)}
+              title={t("help")}
+            >
+              <FontAwesomeIcon icon={faQuestion} />
+            </Button>
+
+            <Button type="icon" onClick={handleReload} title={t("reload")}>
+              <FontAwesomeIcon icon={faRefresh} />
+            </Button>
+          </Stack>
         </Stack>
       </header>
 
       <section className={styles.preview}>
-        {!error && track ? <Preview track={track} /> : error}
+        {!error && track ? (
+          <Preview track={track} />
+        ) : (
+          <div className={styles.error}>{error}</div>
+        )}
       </section>
 
       <Stack vertical gap="large" justify="center">

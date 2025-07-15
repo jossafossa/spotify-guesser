@@ -19,6 +19,15 @@ type PreviewProps = {
   isVisible?: boolean;
 };
 
+const TITLE_CAP = 55;
+const ARTIST_CAP = 70;
+
+const capStringTo = (string: string, amountOfChars: number) => {
+  return string.length > amountOfChars
+    ? string.slice(0, amountOfChars) + "..."
+    : string;
+};
+
 export const Preview = ({ track }: PreviewProps) => {
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -44,7 +53,7 @@ export const Preview = ({ track }: PreviewProps) => {
   }
 
   const name = track.name;
-  const artist = track.artists[0].name;
+  const artist = track.artists.map((a) => a.name).join(", ");
   const image = track.album.images[0].url;
 
   return (
@@ -57,6 +66,7 @@ export const Preview = ({ track }: PreviewProps) => {
       >
         {!isVisible && (
           <RevealButton
+            title={t("reveal_cover")}
             onClick={() => setCoverVisible(!coverVisible)}
             isVisible={coverVisible}
             size="large"
@@ -66,10 +76,13 @@ export const Preview = ({ track }: PreviewProps) => {
       </BlurryImage>
 
       <h2 className={styles.title}>
-        {nameVisible || isVisible ? name : t("song_name")}
+        {nameVisible || isVisible
+          ? capStringTo(name, TITLE_CAP)
+          : t("song_name")}
         {!isVisible && (
           <span className={styles.revealButton}>
             <RevealButton
+              title={t("reveal_song_name")}
               onClick={() => setNameVisible(!nameVisible)}
               isVisible={nameVisible}
               className={styles.revealButton}
@@ -78,17 +91,20 @@ export const Preview = ({ track }: PreviewProps) => {
         )}
       </h2>
 
-      <h4 className={classNames(styles.title, styles.subtitle)}>
-        {artistVisible || isVisible ? artist : t("artist_name")}
+      <h3 className={classNames(styles.title, styles.subtitle)}>
+        {artistVisible || isVisible
+          ? capStringTo(artist, ARTIST_CAP)
+          : t("artist_name")}
         {!isVisible && (
           <span className={styles.revealButton}>
             <RevealButton
+              title={t("reveal_artist")}
               onClick={() => setArtistVisible(!artistVisible)}
               isVisible={artistVisible}
             />
           </span>
         )}
-      </h4>
+      </h3>
 
       <Stack horizontal gap="large" justify="center">
         <Button

@@ -21,8 +21,11 @@ import {
   usePreviousMutation,
 } from "../../store";
 import ConfettiExplosion from "react-confetti-explosion";
+import { useTranslation } from "react-i18next";
 
 export const Navigation = () => {
+  const { t } = useTranslation();
+
   const [correctCount, setCorrectCount] = useState<number>(0);
   const [incorrectCount, setIncorrectCount] = useState<number>(0);
   const [positiveEffect, setPositiveEffect] = useState<boolean>(false);
@@ -77,6 +80,7 @@ export const Navigation = () => {
           <Count variant="negative" count={incorrectCount} />
 
           <Button
+            title={t("incorrect_track")}
             variant="negative"
             type="icon"
             size="large"
@@ -95,6 +99,7 @@ export const Navigation = () => {
       <div className={styles.controls}>
         <Stack horizontal gap="large" justify="center" align="center">
           <Button
+            title={t("previous_track")}
             type="icon"
             size="large"
             onClick={handlePrevious}
@@ -106,6 +111,7 @@ export const Navigation = () => {
 
           {isPlaying ? (
             <Button
+              title={t("pause_track")}
               type="icon"
               size="large"
               onClick={handlePause}
@@ -116,6 +122,7 @@ export const Navigation = () => {
             </Button>
           ) : (
             <Button
+              title={t("play_track")}
               type="icon"
               size="large"
               onClick={handlePlay}
@@ -127,6 +134,7 @@ export const Navigation = () => {
           )}
 
           <Button
+            title={t("next_track")}
             type="icon"
             size="large"
             onClick={handleNext}
@@ -141,6 +149,7 @@ export const Navigation = () => {
       <div className={styles.positive}>
         <Stack horizontal gap="large" justify="center" align="center">
           <Button
+            title={t("correct_track")}
             variant="positive"
             type="icon"
             size="large"
