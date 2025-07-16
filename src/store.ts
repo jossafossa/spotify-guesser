@@ -17,8 +17,6 @@ const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 
 const redirectUri = window.location.protocol + "//" + window.location.host;
 
-//current url is the redirect URI
-
 export const api = SpotifyApi.withUserAuthorization(clientId, redirectUri, [
   "user-read-playback-state",
   "user-modify-playback-state",
