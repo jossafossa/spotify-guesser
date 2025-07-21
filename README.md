@@ -1,6 +1,14 @@
-# Spotify Web API Integration
+# Spotify Guesser
 
-This project is a TypeScript-based react application that integrates with the Spotify Web API that lets you play a guessing game with your friends using Spotify's music library. It allows users to authenticate with their Spotify accounts and interact with their music data.
+This project is a React application built with TypeScript that integrates with the Spotify Web API, enabling you to play a music guessing game with your friends using Spotify's extensive music library. You could try a live demo at [spotiguess.jossafossa.nl](https://spotiguess.jossafossa.nl) if spotify would allow me to set the API in production mode. But unfortunately spotify requires you to have 250K active users 🎉.
+
+## Key Features
+
+- User authentication with Spotify
+- Available in 5 languages
+- Play music guessing game with friends
+- Keeps a record of played songs
+- Responsive design for mobile and desktop
 
 ## Installation
 
