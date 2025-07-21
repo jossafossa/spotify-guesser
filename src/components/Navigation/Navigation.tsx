@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Stack } from "../Stack";
 import styles from "./Navigation.module.scss";
 import {
@@ -43,40 +43,64 @@ export const Navigation = () => {
   const deviceId = device?.id;
   const isPlaying = currentPlayback?.is_playing;
 
-  const handlePlay = () => deviceId && play(deviceId);
-  const handlePause = () => deviceId && pause(deviceId);
-  const handleNext = () => deviceId && next(deviceId);
-  const handlePrevious = () => deviceId && previous(deviceId);
+  const handleDeviceAction = useCallback(
+    (action: (deviceId: string) => void) => {
+      if (!deviceId) return;
+      action(deviceId);
+    },
+    [deviceId]
+  );
 
-  const handleCorrect = () => {
-    if (!deviceId) return;
-    addToHistory(currentPlayback?.item?.id || "", true);
+  const handleCorrect = useCallback(
+    (correct: boolean) => {
+      if (!deviceId) return;
+      addToHistory(currentPlayback?.item?.id || "", correct);
 
-    next(deviceId);
-    showPositiveEffect();
-  };
+      handleDeviceAction(next);
+      showEffect(correct);
+    },
+    [deviceId, currentPlayback, addToHistory, handleDeviceAction, next]
+  );
 
-  const handleInCorrect = () => {
-    if (!deviceId) return;
-    addToHistory(currentPlayback?.item?.id || "", false);
-    next(deviceId);
-    showNegativeEffect();
-  };
+  const showEffect = (correct: boolean) => {
+    const callback = correct ? setPositiveEffect : setNegativeEffect;
 
-  const tooltip = undefined;
-
-  const showPositiveEffect = () => {
-    setPositiveEffect(true);
-    setTimeout(() => setPositiveEffect(false), 1000);
-  };
-
-  const showNegativeEffect = () => {
-    setNegativeEffect(true);
-    setTimeout(() => setNegativeEffect(false), 1000);
+    callback(true);
+    setTimeout(() => callback(false), 1000);
   };
 
   const correctSongs = history.filter((entry) => entry.correct).length;
   const incorrectSongs = history.filter((entry) => !entry.correct).length;
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (!deviceId) return;
+
+      new Map<string, () => void>([
+        ["ArrowLeft", () => handleDeviceAction(previous)],
+        ["ArrowRight", () => handleDeviceAction(next)],
+        ["ArrowUp", () => handleCorrect(true)],
+        ["ArrowDown", () => handleCorrect(false)],
+        ["Space", () => handleDeviceAction(isPlaying ? pause : play)],
+      ]).get(event.code)?.();
+    },
+    [
+      deviceId,
+      handleCorrect,
+      isPlaying,
+      handleDeviceAction,
+      play,
+      pause,
+      next,
+      previous,
+    ]
+  );
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   return (
     <div className={styles.navigation}>
@@ -89,9 +113,8 @@ export const Navigation = () => {
             variant="negative"
             type="icon"
             size="large"
-            onClick={handleInCorrect}
+            onClick={() => handleCorrect(false)}
             disabled={!deviceId}
-            tooltip={tooltip}
           >
             {negativeEffect && (
               <ConfettiExplosion particleCount={25} colors={["gray"]} />
@@ -107,9 +130,8 @@ export const Navigation = () => {
             title={t("previous_track")}
             type="icon"
             size="large"
-            onClick={handlePrevious}
+            onClick={() => handleDeviceAction(previous)}
             disabled={!deviceId}
-            tooltip={tooltip}
           >
             <FontAwesomeIcon icon={faBackward} />
           </Button>
@@ -119,9 +141,8 @@ export const Navigation = () => {
               title={t("pause_track")}
               type="icon"
               size="large"
-              onClick={handlePause}
+              onClick={() => handleDeviceAction(pause)}
               disabled={!deviceId}
-              tooltip={tooltip}
             >
               <FontAwesomeIcon icon={faPause} />
             </Button>
@@ -130,9 +151,8 @@ export const Navigation = () => {
               title={t("play_track")}
               type="icon"
               size="large"
-              onClick={handlePlay}
+              onClick={() => handleDeviceAction(play)}
               disabled={!deviceId}
-              tooltip={tooltip}
             >
               <FontAwesomeIcon icon={faPlay} />
             </Button>
@@ -142,9 +162,8 @@ export const Navigation = () => {
             title={t("next_track")}
             type="icon"
             size="large"
-            onClick={handleNext}
+            onClick={() => handleDeviceAction(next)}
             disabled={!deviceId}
-            tooltip={tooltip}
           >
             <FontAwesomeIcon icon={faForward} />
           </Button>
@@ -158,9 +177,8 @@ export const Navigation = () => {
             variant="positive"
             type="icon"
             size="large"
-            onClick={handleCorrect}
+            onClick={() => handleCorrect(true)}
             disabled={!deviceId}
-            tooltip={tooltip}
           >
             {positiveEffect && <ConfettiExplosion />}
             <FontAwesomeIcon icon={faThumbsUp} />
