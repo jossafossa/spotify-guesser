@@ -1,20 +1,20 @@
-import { PropsWithChildren, useEffect, useRef } from "react";
+import { PropsWithChildren, ReactNode, useEffect, useRef } from "react";
 import styles from "./Modal.module.scss";
 import { Button } from "../Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAt, faClose } from "@fortawesome/free-solid-svg-icons";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { Stack } from "../Stack";
 
 type ModalProps = {
   onClose?: () => void;
   title?: string;
+  footer?: ReactNode;
 };
 
 export const Modal = ({
   children,
   title,
+  footer,
   onClose,
 }: PropsWithChildren<ModalProps>) => {
   const { t } = useTranslation();
@@ -48,30 +48,8 @@ export const Modal = ({
           <FontAwesomeIcon icon={faClose} />
         </Button>
       </header>
-      <section>
-        <p>{children}</p>
-      </section>
-      <footer>
-        <Stack gap="small" align="center">
-          <Button
-            href="https://github.com/jossafossa/spotify-guesser"
-            variant="secondary"
-            type="icon"
-            title="GitHub Repository"
-          >
-            <FontAwesomeIcon icon={faGithub} />
-          </Button>
-
-          <Button
-            href="https://www.jossafossa.nl"
-            variant="secondary"
-            type="icon"
-            title={t("author")}
-          >
-            <FontAwesomeIcon icon={faAt} />
-          </Button>
-        </Stack>
-      </footer>
+      <section>{children}</section>
+      {footer && <footer>{footer}</footer>}
     </dialog>
   );
 };

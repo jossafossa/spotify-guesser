@@ -22,12 +22,13 @@ import {
 } from "../../store";
 import ConfettiExplosion from "react-confetti-explosion";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "../HistoryProvider";
 
 export const Navigation = () => {
   const { t } = useTranslation();
 
-  const [correctCount, setCorrectCount] = useState<number>(0);
-  const [incorrectCount, setIncorrectCount] = useState<number>(0);
+  const { history, addToHistory } = useHistory();
+
   const [positiveEffect, setPositiveEffect] = useState<boolean>(false);
   const [negativeEffect, setNegativeEffect] = useState<boolean>(false);
 
@@ -49,14 +50,15 @@ export const Navigation = () => {
 
   const handleCorrect = () => {
     if (!deviceId) return;
-    setCorrectCount(correctCount + 1);
+    addToHistory(currentPlayback?.item?.id || "", true);
+
     next(deviceId);
     showPositiveEffect();
   };
 
   const handleInCorrect = () => {
     if (!deviceId) return;
-    setIncorrectCount(incorrectCount + 1);
+    addToHistory(currentPlayback?.item?.id || "", false);
     next(deviceId);
     showNegativeEffect();
   };
@@ -73,11 +75,14 @@ export const Navigation = () => {
     setTimeout(() => setNegativeEffect(false), 1000);
   };
 
+  const correctSongs = history.filter((entry) => entry.correct).length;
+  const incorrectSongs = history.filter((entry) => !entry.correct).length;
+
   return (
     <div className={styles.navigation}>
       <div className={styles.negative}>
         <Stack horizontal gap="large" justify="center" align="center">
-          <Count variant="negative" count={incorrectCount} />
+          <Count variant="negative" count={incorrectSongs} />
 
           <Button
             title={t("incorrect_track")}
@@ -161,7 +166,7 @@ export const Navigation = () => {
             <FontAwesomeIcon icon={faThumbsUp} />
           </Button>
 
-          <Count variant="positive" count={correctCount} />
+          <Count variant="positive" count={correctSongs} />
         </Stack>
       </div>
     </div>

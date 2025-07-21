@@ -1,0 +1,32 @@
+.historyItem {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  align-items: center;
+  line-height: 1.2;
+
+  > section {
+    flex: 1;
+  }
+
+  > footer {
+    align-self: flex-start;
+  }
+}
+
+.image {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1rem;
+  object-fit: cover;
+}
+
+.correct {
+  padding-top: 0.3rem;
+  color: var(--positive);
+}
+
+.incorrect {
+  padding-top: 0.3rem;
+  color: var(--negative);
+}

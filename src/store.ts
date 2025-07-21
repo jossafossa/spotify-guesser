@@ -10,6 +10,7 @@ import {
   Devices,
   PlaybackState,
   SpotifyApi,
+  Track,
   UserProfile,
 } from "@spotify/web-api-ts-sdk";
 
@@ -95,6 +96,12 @@ export const spotifyApi = createApi({
         },
         invalidatesTags: ["Playback"],
       }),
+      getTracks: builder.query<Track[], string[]>({
+        queryFn: async (trackIds) => {
+          const data = await api.tracks.get(trackIds);
+          return { data };
+        },
+      }),
     };
   },
 });
@@ -138,6 +145,7 @@ export const {
   useNextMutation,
   usePreviousMutation,
   useGetDevicesQuery,
+  useGetTracksQuery,
 } = spotifyApi;
 
 export type RootState = ReturnType<typeof store.getState>;
