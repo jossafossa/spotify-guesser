@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Stack } from "../Stack";
 import styles from "./Preview.module.scss";
 import placeholder from "../../assets/images/placeholder.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { RevealButton } from "../RevealButton";
 import { Track, TrackItem } from "@spotify/web-api-ts-sdk";
 import { Button } from "../Button";
@@ -30,23 +30,22 @@ const capStringTo = (string: string, amountOfChars: number) => {
 
 export const Preview = ({ track }: PreviewProps) => {
   const { t } = useTranslation();
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [coverVisible, setCoverVisible] = useState(false);
   const [artistVisible, setArtistVisible] = useState(false);
   const [nameVisible, setNameVisible] = useState(false);
+  const [revealedTrackId, setRevealedTrackId] = useState(track.id);
 
-  useEffect(() => {
+  // Reset while rendering instead of in an effect: an effect only runs after
+  // paint, so the new track would be shown for a frame with the reveal state
+  // of the previous one.
+  if (revealedTrackId !== track.id) {
+    setRevealedTrackId(track.id);
     setCoverVisible(false);
     setArtistVisible(false);
     setNameVisible(false);
     setIsVisible(false);
-  }, [
-    track.id,
-    setCoverVisible,
-    setArtistVisible,
-    setNameVisible,
-    setIsVisible,
-  ]);
+  }
 
   if (!isTrack(track)) {
     return <div>{t("error_invalid_track_data")}</div>;
