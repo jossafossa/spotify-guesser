@@ -2,10 +2,11 @@ import { useTranslation } from "react-i18next";
 import { Stack } from "../Stack";
 import styles from "./Preview.module.scss";
 import placeholder from "../../assets/images/placeholder.svg";
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { RevealButton } from "../RevealButton";
 import { Track, TrackItem } from "@spotify/web-api-ts-sdk";
 import { Button } from "../Button";
+import { Clickable } from "../Clickable";
 import classNames from "classnames";
 import { BlurryImage } from "../BlurryImage";
 
@@ -21,6 +22,36 @@ type PreviewProps = {
 
 const TITLE_CAP = 55;
 const ARTIST_CAP = 70;
+
+type RevealProps = PropsWithChildren<{
+  title: string;
+  isInteractive: boolean;
+  onToggle: () => void;
+  className?: string;
+}>;
+
+// Turns its whole content into a reveal target instead of only the eye icon.
+// Once the full preview is shown there is nothing left to reveal, so the
+// content is rendered bare.
+const Reveal = ({
+  title,
+  isInteractive,
+  onToggle,
+  className,
+  children,
+}: RevealProps) => {
+  if (!isInteractive) return <>{children}</>;
+
+  return (
+    <Clickable
+      className={classNames(styles.reveal, className)}
+      title={title}
+      onClick={onToggle}
+    >
+      {children}
+    </Clickable>
+  );
+};
 
 const capStringTo = (string: string, amountOfChars: number) => {
   return string.length > amountOfChars
@@ -57,52 +88,60 @@ export const Preview = ({ track }: PreviewProps) => {
 
   return (
     <Stack vertical gap="medium" align="center">
-      <BlurryImage
-        className={styles.picture}
-        imageclassName={styles.image}
-        src={coverVisible || isVisible ? image : placeholder}
-        alt={name}
+      <Reveal
+        title={t("reveal_cover")}
+        isInteractive={!isVisible}
+        onToggle={() => setCoverVisible(!coverVisible)}
+        className={styles.coverReveal}
       >
-        {!isVisible && (
-          <RevealButton
-            title={t("reveal_cover")}
-            onClick={() => setCoverVisible(!coverVisible)}
-            isVisible={coverVisible}
-            size="large"
-            className={styles.imageButton}
-          />
-        )}
-      </BlurryImage>
+        <BlurryImage
+          className={styles.picture}
+          imageclassName={styles.image}
+          src={coverVisible || isVisible ? image : placeholder}
+          alt={name}
+        >
+          {!isVisible && (
+            <RevealButton
+              isVisible={coverVisible}
+              size="large"
+              className={styles.imageButton}
+            />
+          )}
+        </BlurryImage>
+      </Reveal>
 
       <h2 className={styles.title}>
-        {nameVisible || isVisible
-          ? capStringTo(name, TITLE_CAP)
-          : t("song_name")}
-        {!isVisible && (
-          <span className={styles.revealButton}>
-            <RevealButton
-              title={t("reveal_song_name")}
-              onClick={() => setNameVisible(!nameVisible)}
-              isVisible={nameVisible}
-              className={styles.revealButton}
-            />
-          </span>
-        )}
+        <Reveal
+          title={t("reveal_song_name")}
+          isInteractive={!isVisible}
+          onToggle={() => setNameVisible(!nameVisible)}
+        >
+          {nameVisible || isVisible
+            ? capStringTo(name, TITLE_CAP)
+            : t("song_name")}
+          {!isVisible && (
+            <span className={styles.revealButton}>
+              <RevealButton isVisible={nameVisible} />
+            </span>
+          )}
+        </Reveal>
       </h2>
 
       <h3 className={classNames(styles.title, styles.subtitle)}>
-        {artistVisible || isVisible
-          ? capStringTo(artist, ARTIST_CAP)
-          : t("artist_name")}
-        {!isVisible && (
-          <span className={styles.revealButton}>
-            <RevealButton
-              title={t("reveal_artist")}
-              onClick={() => setArtistVisible(!artistVisible)}
-              isVisible={artistVisible}
-            />
-          </span>
-        )}
+        <Reveal
+          title={t("reveal_artist")}
+          isInteractive={!isVisible}
+          onToggle={() => setArtistVisible(!artistVisible)}
+        >
+          {artistVisible || isVisible
+            ? capStringTo(artist, ARTIST_CAP)
+            : t("artist_name")}
+          {!isVisible && (
+            <span className={styles.revealButton}>
+              <RevealButton isVisible={artistVisible} />
+            </span>
+          )}
+        </Reveal>
       </h3>
 
       <Stack horizontal gap="large" justify="center">

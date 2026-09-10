@@ -9,6 +9,25 @@
   }
 }
 
+// The reveal targets are buttons wrapping the cover, title and artist, so they
+// have to render as the content they wrap.
+.reveal {
+  display: inline;
+  color: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.coverReveal {
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+
+  &:focus-visible .imageButton {
+    opacity: 1;
+  }
+}
+
 .image {
   background-color: var(--black);
   overflow: hidden;
